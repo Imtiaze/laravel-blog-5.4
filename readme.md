@@ -1,3 +1,56 @@
+# User
+
+
+## posts                              
+
+* title (225)
+* subtitle (100)
+* slug (100)
+* status (boolean)
+* posted by (int)
+* body (text)
+* image (255)
+* like
+* dislike
+
+## categories
+
+* name
+* slug
+
+## tags
+
+* name
+* slug
+
+## category_posts
+
+* category_id
+* post_id
+
+## post_tags
+
+* post_id
+* tag_id
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
 <p align="center">
