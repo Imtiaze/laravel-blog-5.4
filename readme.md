@@ -3,6 +3,7 @@
 
 ## posts                              
 
+* id
 * title (225)
 * subtitle (100)
 * slug (100)
@@ -15,11 +16,13 @@
 
 ## categories
 
+* id
 * name
 * slug
 
 ## tags
 
+* id
 * name
 * slug
 
@@ -35,7 +38,25 @@
 
 
 
- 
+# Admin
+
+## admins
+
+* id 
+* name
+* email
+* phone
+* status
+
+## roles
+
+* id
+* name
+
+## amdin_roles
+
+* admin_id
+* role_id
 
 
 
