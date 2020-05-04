@@ -22,7 +22,8 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-offset-2 col-md-6">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
                     <div class="card card-info">
                         <div class="card-header">
                             <h3 class="card-title">Add Tag</h3>

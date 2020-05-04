@@ -24,113 +24,141 @@
         </div>
     </section>
 
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card card-info">
-                        <div class="card-header">
-                            <h3 class="card-title">Write Post</h3>
-                        </div>
+    <!-- @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif -->
 
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label for="title">Title</label>
-                                <input type="text" class="form-control" id="title" name="title" placeholder="Enter Title">
+    <form role="form" action="{{ url('admin/post/store') }}" method="POST" id="postForm">
+        {{ csrf_field() }}
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card card-info">
+                            <div class="card-header">
+                                <h3 class="card-title">Write Post</h3>
                             </div>
-                            <div class="form-group">
-                                <label for="subtitle">Post Subtitle</label>
-                                <input type="text" class="form-control" id="subtitle" name="subtitle" placeholder="Enter Subtitle">
-                            </div>
-                            <div class="form-group">
-                                <label for="image">File input</label>
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="image" name="image">
-                                        <label class="custom-file-label" for="image">Choose file</label>
+
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="title">Title</label>
+                                    <input type="text" class="form-control {{ $errors->get('title') ? 'is-invalid' : ''}}" id="title" name="title" value="{{ old('title') }}" placeholder="Enter Title">
+
+                                    @foreach($errors->get('title') as $error)
+                                    <span class="error invalid-feedback" style="">{{ $error }}</span>
+                                    @endforeach
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="subtitle">Post Subtitle</label>
+                                    <input type="text" class="form-control {{ $errors->get('subtitle') ? 'is-invalid' : ''}}" id="subtitle" name="subtitle" value="{{ old('title') }}" placeholder="Enter Subtitle">
+                                    
+                                    @foreach($errors->get('subtitle') as $error)
+                                    <span class="error invalid-feedback" style="">{{ $error }}</span>
+                                    @endforeach
+                                </div>
+                                <div class="form-group">
+                                    <label for="slug">Post Slug</label>
+                                    <input type="text" class="form-control" id="slug" name="slug" value="{{ old('slug') }}" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="image">File input</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="image" name="image">
+                                            <label class="custom-file-label" for="image">Choose file</label>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-check">
-                                <div class="icheck-info d-inline">
-                                    <input type="checkbox" id="checkboxDanger1">
-                                    <label for="checkboxDanger1">Publish</label>
+                                <div class="form-check">
+                                    <div class="icheck-info d-inline">
+                                        <input type="checkbox" id="status" name="status">
+                                        <label for="status">Publish</label>
+                                    </div>
+
                                 </div>
-
                             </div>
-                        </div>
 
-                        <div class="card-footer">
-                            <button type="button" class="btn btn-block bg-gradient-success">Submit</button>
-                        </div>
+                            <div class="card-footer">
+                                <input type="submit" class="btn btn-block bg-gradient-success" value="Submit" />
+                            </div>
 
+                        </div>
                     </div>
-                </div>
 
 
-                <div class="col-md-6">
-                    <div class="card card-info">
-                        <div class="card-header">
-                            <h3 class="card-title">Categories and Tags</h3>
-                        </div>
-
-                        <div class="card-body">
-
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Text</label>
-                                        <input type="text" class="form-control" placeholder="Enter ...">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Text Disabled</label>
-                                        <input type="text" class="form-control" placeholder="Enter ..." disabled="">
-                                    </div>
-                                </div>
+                    <!-- <div class="col-md-6">
+                        <div class="card card-info">
+                            <div class="card-header">
+                                <h3 class="card-title">Categories and Tags</h3>
                             </div>
 
+                            <div class="card-body">
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Text</label>
+                                            <input type="text" class="form-control" placeholder="Enter ...">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Text Disabled</label>
+                                            <input type="text" class="form-control" placeholder="Enter ..." disabled="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-outline card-info">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    Post Body
+                                    <small>Simple and fast</small>
+                                </h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                        <i class="fas fa-minus"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body pad">
+                                <div class="mb-3">
+                                    <textarea name="body" class="textarea" placeholder="Place some text here" style="width: 100%; height: 450px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card card-outline card-info">
-                        <div class="card-header">
-                            <h3 class="card-title">
-                                Post Body
-                                <small>Simple and fast</small>
-                            </h3>
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool btn-sm" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                                    <i class="fas fa-minus"></i></button>
-                            </div>
-                        </div>
-                        <div class="card-body pad">
-                            <div class="mb-3">
-                                <textarea class="textarea" placeholder="Place some text here" style="width: 100%; height: 450px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
+    </form>
 </div>
 @endsection
 
 
 @section('js')
-<script src="{{ asset('plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+<script src="{{ asset('admin/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
 <script src="{{ asset('admin/plugins/summernote/summernote-bs4.min.js') }}"></script>
+<script src="{{ asset('admin/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
+<script src="{{ asset('admin/plugins/jquery-validation/additional-methods.min.js' )}}"></script>
 <script>
     $(function() {
         // Summernote
@@ -139,6 +167,37 @@
 
     $(document).ready(function() {
         bsCustomFileInput.init();
+    });
+
+    $('#postForm').validate({
+        rules: {
+            title: {
+                required: true,
+                maxlength: 255,
+            },
+            subtitle: {
+                required: true,
+            },
+        },
+        messages: {
+            title: {
+                required: "Please enter title for the post",
+            },
+            subtitle: {
+                required: "Please enter subtitle for the post",
+            },
+        },
+        errorElement: 'span',
+        errorPlacement: function(error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function(element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
     });
 </script>
 @endsection
