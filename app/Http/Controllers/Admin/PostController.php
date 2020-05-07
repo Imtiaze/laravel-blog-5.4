@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Model\User\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -39,7 +40,18 @@ class PostController extends Controller
         $this->validate($request, [
             'title'    => 'required|unique:posts|max:255',
             'subtitle' => 'required',
+            'slug'     => 'required',
+            'body'     => 'required',
         ]);
+
+        $post           = new Post();
+        $post->title    = $request->title;
+        $post->subtitle = $request->subtitle;
+        $post->slug     = $request->slug;
+        $post->body     = $request->body;
+        $post->save();
+
+        return redirect('admin/post/index');
     }
 
     /**

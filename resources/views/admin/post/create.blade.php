@@ -3,6 +3,7 @@
 @section('css')
 <link rel="stylesheet" href="{{ asset('admin/plugins/summernote/summernote-bs4.css') }}">
 <link rel="stylesheet" href="{{ asset('admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 @endsection
 
 @section('main-content')
@@ -46,6 +47,7 @@
                             </div>
 
                             <div class="card-body">
+                                <!-- Title -->
                                 <div class="form-group">
                                     <label for="title">Title</label>
                                     <input type="text" class="form-control {{ $errors->get('title') ? 'is-invalid' : ''}}" id="title" name="title" value="{{ old('title') }}" placeholder="Enter Title">
@@ -53,20 +55,25 @@
                                     @foreach($errors->get('title') as $error)
                                     <span class="error invalid-feedback" style="">{{ $error }}</span>
                                     @endforeach
-
                                 </div>
+
+                                <!-- Sub Title -->
                                 <div class="form-group">
                                     <label for="subtitle">Post Subtitle</label>
                                     <input type="text" class="form-control {{ $errors->get('subtitle') ? 'is-invalid' : ''}}" id="subtitle" name="subtitle" value="{{ old('title') }}" placeholder="Enter Subtitle">
-                                    
+
                                     @foreach($errors->get('subtitle') as $error)
                                     <span class="error invalid-feedback" style="">{{ $error }}</span>
                                     @endforeach
                                 </div>
+
+                                <!-- Slug -->
                                 <div class="form-group">
                                     <label for="slug">Post Slug</label>
                                     <input type="text" class="form-control" id="slug" name="slug" value="{{ old('slug') }}" readonly>
                                 </div>
+
+                                <!-- File -->
                                 <div class="form-group">
                                     <label for="image">File input</label>
                                     <div class="input-group">
@@ -76,6 +83,8 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <!-- Status -->
                                 <div class="form-check">
                                     <div class="icheck-info d-inline">
                                         <input type="checkbox" id="status" name="status">
@@ -86,7 +95,11 @@
                             </div>
 
                             <div class="card-footer">
-                                <input type="submit" class="btn btn-block bg-gradient-success" value="Submit" />
+                                <button type="submit" class="btn btn-block bg-gradient-success" id="post-submit-button">
+                                    <!-- <i style="color:white;" class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>-->
+                                    <i class="fas fa-circle-notch fa-spin" style="display:none;"></i>&nbsp&nbsp
+                                    <span id="post-submit-text">Submit</span>
+                                </button>
                             </div>
 
                         </div>
@@ -143,6 +156,9 @@
                                 <div class="mb-3">
                                     <textarea name="body" class="textarea" placeholder="Place some text here" style="width: 100%; height: 450px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                                 </div>
+                                @foreach($errors->get('body') as $error)
+                                <span style="color:red;">{{ $error }}</span>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -169,6 +185,9 @@
         bsCustomFileInput.init();
     });
 
+    /**
+     *  Validation Post Form
+     */
     $('#postForm').validate({
         rules: {
             title: {
@@ -197,7 +216,26 @@
         },
         unhighlight: function(element, errorClass, validClass) {
             $(element).removeClass('is-invalid');
+        },
+        submitHandler: function(form) { 
+            $('#post-submit-button').attr('disabled', true);
+            $('.fa-spin').show();
+            $('#post-submit-text').text('Submitting...');
+            form.submit();
         }
+    });
+
+    /**
+     *   Making Slug
+     */
+    $('#title').on('keyup', function() {
+        let title = $('#title').val();
+
+        title = (title.trim) ? title.trim() : title.replace(/^\s+|\s+$/g, '');
+        let slug = title.split(/\s+/).join('-');
+
+        $('#slug').val(slug);
+
     });
 </script>
 @endsection

@@ -14,7 +14,10 @@ Route::group(['namespace' => 'Admin'], function(){
     Route::get('admin/post/create', 'PostController@create');
     Route::post('admin/post/store', 'PostController@store');
 
-    Route::get('admin/categories', 'CategoryController@create');
+    Route::get('admin/categories', 'CategoryController@index');
+    Route::get('admin/category/create', 'CategoryController@create');
+    Route::post('admin/category/store', 'CategoryController@store');
+
     Route::get('admin/tags', 'TagController@create');
 
 });
